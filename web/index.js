@@ -8,6 +8,8 @@ import shopify from "./shopify.js";
 import applyQrCodeApiEndpoints from "./middleware/qr-code-api.js";
 import GDPRWebhookHandlers from "./gdpr.js";
 
+import applyQrCodePublicEndpoints from "./middleware/qr-code-public.js";
+
 const PORT = parseInt(
   process.env.BACKEND_PORT || process.env.PORT || "3000",
   10
@@ -31,6 +33,8 @@ app.post(
   shopify.config.webhooks.path,
   shopify.processWebhooks({ webhookHandlers: GDPRWebhookHandlers })
 );
+
+applyQrCodePublicEndpoints(app);
 
 // If you are adding routes outside of the /api path, remember to
 // also add a proxy rule for them in web/frontend/vite.config.js
